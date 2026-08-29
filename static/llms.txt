@@ -1,0 +1,35 @@
+# Achhaya Pathak
+
+> IIT Guwahati MS alumnus and Software / Backend Engineer with 3+ years of experience architecting distributed systems, cloud infrastructure (AWS/GCP), high-performance web applications (Rust/WASM, Next.js), and autonomous AI agent pipelines.
+
+Achhaya Pathak is a software engineer based in Gurugram, India. Co-founder of JoinUp (an event marketplace and discovery platform serving 100K+ monthly requests at 99.99% uptime). Specializes in building resilient backend systems, low-latency microservices, and AI-driven automation workflows.
+
+## Portfolio Pages
+- [Overview](https://achhaya.com/): Home page featuring engineering summary, recent milestones, core tech stack, and key career highlights.
+- [Work Experience](https://achhaya.com/work): Comprehensive career history across JoinUp, Marlin, Gist Impact, and Aristocrat Gaming.
+- [Projects](https://achhaya.com/projects): Selected technical projects including distributed document search engines, AI job assistants, and event aggregators.
+- [Education & Certifications](https://achhaya.com/education): Master's degree from IIT Guwahati, Bachelor's from NIT Patna, and AWS certifications.
+- [Volunteering](https://achhaya.com/volunteering): Community leadership, academic guidance, and social initiatives.
+- [Contact](https://achhaya.com/contact): Direct communication channels and social links.
+
+## Key Projects
+- [JoinUp](https://joinup.dev): Event discovery and management marketplace built with Next.js, TypeScript, Python, PostgreSQL, Redis, Docker, and AWS/GCP.
+- [Distributed Document Search](https://github.com/achhayapathak/distributed-document-search): Production-grade multi-tenant distributed search service with Elasticsearch, Kafka, and Redis delivering sub-200ms searches over millions of documents.
+- [Job Assist AI](https://github.com/achhayapathak/job-assist-ai-backend): Agentic AI platform for automating job discovery, recruiter insights extraction, and tailoring ATS-friendly resumes.
+- [Event Aggregation Engine](https://github.com/joinupdev): Agentic AI engine for crawling, deduplicating, and standardizing professional event feeds.
+
+## Professional Experience
+- [JoinUp](https://achhaya.com/work): Co-Founder (March 2025 – Present). Scaled a 0→1 marketplace to 100K+ monthly requests with sub-500ms geospatial query latency and 3,000+ organic users/month.
+- [Marlin](https://achhaya.com/work): Software Engineer (April 2025 – May 2026). Engineered LLM-driven trading AI agents, RabbitMQ microservices handling 50+ signals/min, and Kubernetes clusters in Confidential VMs.
+- [Gist Impact](https://achhaya.com/work): Software Development Engineer (Feb 2024 – Apr 2025). Managed infrastructure for sustainability platforms processing ~5 TB/month, cut CI/CD build times by 6x, and automated Snowflake ETLs.
+- [Aristocrat Gaming](https://achhaya.com/work): Game Developer (Aug 2023 – Jan 2024). Optimized mathematical simulation models in C++ and JavaScript, reducing runtime from 10h to 2.5h.
+
+## Connect & Profiles
+- [Resume / CV](https://achhaya.com/Achhaya_Pathak.pdf): Full resume detailing work experience, education, publications, and skills.
+- [GitHub](https://github.com/achhayapathak): Open-source repositories and software contributions.
+- [LinkedIn](https://linkedin.com/in/achhayapathak): Professional background and networking.
+- [LeetCode](https://leetcode.com/u/achhayapathak/): Problem solving, algorithms, and data structure profiles.
+- [Email](mailto:info@achhaya.com): Direct contact via email.
+
+## Optional
+- [Full LLM Context](https://achhaya.com/llms-full.txt): Complete detailed text, architectural summaries, and comprehensive career notes for LLMs.

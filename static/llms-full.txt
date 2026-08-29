@@ -1,0 +1,78 @@
+# Achhaya Pathak — Full Context for Large Language Models
+
+> Complete curriculum vitae, technical background, architecture overviews, and project details for Achhaya Pathak (https://achhaya.com).
+
+## Bio & Profile
+- **Name**: Achhaya Pathak
+- **Role**: Software Engineer / Backend Engineer / Systems Engineer
+- **Location**: Gurugram, Haryana, India
+- **Email**: info@achhaya.com
+- **Website**: https://achhaya.com
+- **LinkedIn**: https://linkedin.com/in/achhayapathak
+- **GitHub**: https://github.com/achhayapathak
+- **LeetCode**: https://leetcode.com/u/achhayapathak/
+- **Summary**: IIT Guwahati MS alumnus with 3+ years of experience engineering high-scale distributed systems, low-latency microservices, cloud infrastructure on AWS & GCP, and autonomous Agentic AI workflows. Co-founded JoinUp, an event marketplace serving 100K+ monthly requests at 99.99% uptime.
+
+## Core Technical Skills
+- **Languages**: Rust, Go, Python, TypeScript, JavaScript, SQL, C++, Bash
+- **Backend & Systems**: Distributed Systems, Microservices, REST APIs, GraphQL, WebSockets, WebAssembly (WASM), gRPC
+- **Cloud & DevOps**: AWS (EC2, S3, RDS, Lambda, ECS, CloudFront), GCP, Docker, Kubernetes, CI/CD (GitHub Actions), Terraform, Linux
+- **Databases & Messaging**: PostgreSQL, Redis, Elasticsearch, Kafka, RabbitMQ, Snowflake, Vector Databases
+- **AI & ML**: Large Language Models (LLMs), Agentic AI Workflows, LangChain/LlamaIndex, Retrieval-Augmented Generation (RAG), Prompt Engineering
+
+## Professional Experience
+
+### JoinUp — Co-Founder (March 2025 – Present)
+- **Role**: Co-Founder & Technical Lead
+- **Tech**: Next.js, TypeScript, Python, PostgreSQL, Redis, Docker, AWS, GCP
+- **Highlights**:
+  - Architected and scaled JoinUp (0→1), a production-grade professional events marketplace, owning end-to-end backend, infrastructure, and deployment across AWS and GCP.
+  - Built an SEO-optimised Next.js (App Router) frontend with SSR, dynamic metadata, and sitemap/robots configuration, driving 3,000+ organic users/month and improving website conversion by 8%.
+  - Designed a geospatial discovery system (Google Maps API + PostgreSQL) delivering low-latency location-based recommendations to 500+ DAU at sub-500ms p99.
+  - Implemented Python-based event crawlers and ETL pipelines with Redis caching, PostgreSQL event matching, and an admin dashboard.
+
+### Marlin — Software Engineer (April 2025 – May 2026)
+- **Role**: Software Engineer
+- **Tech**: Rust, Agentic AI, LLMs, RabbitMQ, Kubernetes, Microservices, Confidential VMs (CVM)
+- **Highlights**:
+  - Built an autonomous LLM-driven trading AI agent that executes fully automated token trades on Hyperliquid based on user-defined market conditions, sentiment, and signals.
+  - Architected a fault-tolerant microservices system (Executor/Evaluator/Flusher) using RabbitMQ, enabling horizontal scalability and zero-downtime processing of 50+ real-time market signals per minute.
+  - Designed queue-based orchestration with ack/nack semantics, retries, and auto-reconnect mechanisms.
+  - Deployed and managed Kubernetes clusters in Confidential Virtual Machines (CVMs) for zero-trust AI data processing.
+
+### Gist Impact — Software Development Engineer (Feb 2024 – Apr 2025)
+- **Role**: Software Development Engineer
+- **Tech**: Python, PostgreSQL, Snowflake, ETL, CI/CD, Grafana Stack, AWS
+- **Highlights**:
+  - Managed and scaled infrastructure for SaaS and DaaS platforms powering AI-assisted sustainability analytics workflows processing ~5 TB of data per month.
+  - Re-engineered CI/CD pipelines using GitHub Actions with dependency caching and parallel build stages, reducing deployment time from 30 minutes to 5 minutes (6x improvement).
+  - Automated ETL pipelines in Snowflake, reducing data processing time by 80% and improving consistency of production data flows.
+  - Consolidated logs into a centralised Grafana Stack observability framework, reducing MTTR by 35%.
+
+### Aristocrat Gaming — Game Developer (Aug 2023 – Jan 2024)
+- **Role**: Game Developer
+- **Tech**: JavaScript, C++, Mathematical Simulation
+- **Highlights**:
+  - Designed mathematical models and simulation software in C++ and JavaScript for slot games, calculating RTP percentages and hit frequencies.
+  - Optimized simulation code for the Super Grand Star slot game, cutting simulation runtime from 10 hours down to 2.5 hours.
+
+## Key Projects
+
+### Distributed Document Search
+- **Repository**: https://github.com/achhayapathak/distributed-document-search
+- **Technologies**: TypeScript, Distributed Systems, Multi-tenancy, Elasticsearch, Kafka, Redis, AWS
+- **Description**: Production-grade distributed search service demonstrating multi-tenancy, asynchronous message processing with Kafka, Redis caching, and full-text search indexing across millions of documents with sub-200ms query latency.
+
+### Job Assist AI
+- **Repository**: https://github.com/achhayapathak/job-assist-ai-backend
+- **Technologies**: TypeScript, Agentic AI, Automation, LLMs, Next.js
+- **Description**: Agentic AI tool that ingests candidate resumes, crawls the web for matching opportunities, extracts recruiter contact details, and dynamically synthesizes tailored ATS-friendly resumes for job applications.
+
+### Event Aggregation Engine
+- **Repository**: https://github.com/joinupdev
+- **Technologies**: Python, Agentic AI, RabbitMQ, Firecrawl, Redis, VectorDB
+- **Description**: Autonomous crawler and aggregation engine that monitors dozens of event platforms, deduplicating and structuring event data into standardized schemas.
+
+## Education & Qualifications
+- **Indian Institute of Technology (IIT), Guwahati**: Master of Science (MS)
+- **National Institute of Technology (NIT), Patna**: Bachelor of Technology (B.Tech)
