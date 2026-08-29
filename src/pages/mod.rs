@@ -134,8 +134,10 @@ pub fn render_html_wrapper(
     if(mc&&ms){mc.onclick=function(){ms.style.display="none";document.body.classList.remove("nav-open");if(mt)mt.setAttribute("aria-expanded","false")}}
     document.querySelectorAll(".mobile-row").forEach(function(r){r.onclick=function(){if(ms)ms.style.display="none";document.body.classList.remove("nav-open");if(mt)mt.setAttribute("aria-expanded","false")}});
     if("IntersectionObserver" in window){
-      var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateY(0)"}})},{rootMargin:"-50px"});
-      document.querySelectorAll(".section-reveal").forEach(function(el){el.style.opacity="0";el.style.transform="translateY(24px)";el.style.transition="opacity .5s ease-out, transform .5s ease-out";obs.observe(el)});
+      var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("revealed");obs.unobserve(e.target)}})},{rootMargin:"-50px"});
+      document.querySelectorAll(".section-reveal").forEach(function(el){obs.observe(el)});
+    }else{
+      document.querySelectorAll(".section-reveal").forEach(function(el){el.classList.add("revealed")});
     }
   });
 })();

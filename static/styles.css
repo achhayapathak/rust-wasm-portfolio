@@ -1286,8 +1286,23 @@ body.nav-open {
   opacity: 0.45;
 }
 
-/* ── Section Reveal (handled by WASM IntersectionObserver) ── */
+/* ── Section Reveal (CSS transitions with zero layout thrashing) ── */
 
 .section-reveal {
-  /* Initial state set by WASM; fallback for no-JS */
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.section-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

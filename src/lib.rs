@@ -174,36 +174,31 @@ fn setup_expandable_text(document: &Document) {
         Ok(w) => w,
         Err(_) => return,
     };
+    if wrappers.length() == 0 {
+        return;
+    }
 
-    for i in 0..wrappers.length() {
-        if let Some(node) = wrappers.item(i) {
-            if let Some(wrapper_el) = node.dyn_ref::<Element>() {
-                // Check if content overflows
-                if let Ok(Some(content_el)) = wrapper_el.query_selector(".expandable-content") {
-                    if let Some(html_content) = content_el.dyn_ref::<HtmlElement>() {
-                        let overflows = html_content.scroll_height() > html_content.client_height();
+    // Schedule measurements inside request_animation_frame to prevent forced synchronous reflow
+    let doc = document.clone();
+    let r_closure = Closure::wrap(Box::new(move || {
+        let wrappers = match doc.query_selector_all(".expandable-wrapper") {
+            Ok(w) => w,
+            Err(_) => return,
+        };
 
-                        if overflows {
-                            // Show the toggle button
-                            if let Ok(Some(btn)) = wrapper_el.query_selector(".expand-toggle") {
-                                if let Some(html_btn) = btn.dyn_ref::<HtmlElement>() {
-                                    let _ = html_btn.style().set_property("display", "inline-block");
-
-                                    let content_clone = content_el.clone();
-                                    let btn_clone = btn.clone();
-                                    let closure = Closure::wrap(Box::new(move || {
-                                        let is_clamped = content_clone.class_list().contains("clamped");
-                                        if is_clamped {
-                                            let _ = content_clone.class_list().remove_1("clamped");
-                                            btn_clone.set_text_content(Some("– show less"));
-                                        } else {
-                                            let _ = content_clone.class_list().add_1("clamped");
-                                            btn_clone.set_text_content(Some("+ read full entry"));
-                                        }
-                                    }) as Box<dyn FnMut()>);
-
-                                    let _ = btn.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref());
-                                    closure.forget();
+        // Phase 1 (Batch Reads): Read layout dimensions without writing to the DOM
+        let mut overflow_elements = Vec::new();
+        for i in 0..wrappers.length() {
+            if let Some(node) = wrappers.item(i) {
+                if let Some(wrapper_el) = node.dyn_ref::<Element>() {
+                    if let Ok(Some(content_el)) = wrapper_el.query_selector(".expandable-content") {
+                        if let Some(html_content) = content_el.dyn_ref::<HtmlElement>() {
+                            let overflows = html_content.scroll_height() > html_content.client_height();
+                            if overflows {
+                                if let Ok(Some(btn)) = wrapper_el.query_selector(".expand-toggle") {
+                                    if let Ok(html_btn) = btn.dyn_into::<HtmlElement>() {
+                                        overflow_elements.push((content_el, html_btn));
+                                    }
                                 }
                             }
                         }
@@ -211,7 +206,32 @@ fn setup_expandable_text(document: &Document) {
                 }
             }
         }
+
+        // Phase 2 (Batch Writes): Update classes and attach event handlers
+        for (content_el, html_btn) in overflow_elements {
+            let _ = html_btn.style().set_property("display", "inline-block");
+            let content_clone = content_el.clone();
+            let btn_clone = html_btn.clone();
+            let closure = Closure::wrap(Box::new(move || {
+                let is_clamped = content_clone.class_list().contains("clamped");
+                if is_clamped {
+                    let _ = content_clone.class_list().remove_1("clamped");
+                    btn_clone.set_text_content(Some("– show less"));
+                } else {
+                    let _ = content_clone.class_list().add_1("clamped");
+                    btn_clone.set_text_content(Some("+ read full entry"));
+                }
+            }) as Box<dyn FnMut()>);
+
+            let _ = html_btn.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref());
+            closure.forget();
+        }
+    }) as Box<dyn FnMut()>);
+
+    if let Some(w) = window() {
+        let _ = w.request_animation_frame(r_closure.as_ref().unchecked_ref());
     }
+    r_closure.forget();
 }
 
 // ── Section Reveal ───────────────────────────────────────────
@@ -225,26 +245,13 @@ fn setup_section_reveal(_window: &web_sys::Window, document: &Document) {
         return;
     }
 
-    // Initially hide all section-reveal elements
-    for i in 0..sections.length() {
-        if let Some(node) = sections.item(i) {
-            if let Some(html_section) = node.dyn_ref::<HtmlElement>() {
-                let _ = html_section.style().set_property("opacity", "0");
-                let _ = html_section.style().set_property("transform", "translateY(24px)");
-                let _ = html_section.style().set_property("transition", "opacity 0.5s ease-out, transform 0.5s ease-out");
-            }
-        }
-    }
-
-    let callback = Closure::wrap(Box::new(move |entries: js_sys::Array, _observer: IntersectionObserver| {
+    let callback = Closure::wrap(Box::new(move |entries: js_sys::Array, observer: IntersectionObserver| {
         for i in 0..entries.length() {
             let entry: web_sys::IntersectionObserverEntry = entries.get(i).unchecked_into();
             if entry.is_intersecting() {
                 let target = entry.target();
-                if let Some(html_target) = target.dyn_ref::<HtmlElement>() {
-                    let _ = html_target.style().set_property("opacity", "1");
-                    let _ = html_target.style().set_property("transform", "translateY(0)");
-                }
+                let _ = target.class_list().add_1("revealed");
+                observer.unobserve(&target);
             }
         }
     }) as Box<dyn FnMut(js_sys::Array, IntersectionObserver)>);
