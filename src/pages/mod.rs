@@ -65,10 +65,12 @@ pub fn render_html_wrapper(
     out.push_str("<meta name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"#08080b\">\n");
     out.push_str(&format!("<link rel=\"canonical\" href=\"{}\">\n", canonical_url));
     out.push_str(&format!("<link rel=\"image_src\" href=\"{}/logo.jpeg\">\n", base_url));
+    out.push_str("<link rel=\"icon\" href=\"/favicon.ico\" sizes=\"any\">\n");
+    out.push_str("<link rel=\"icon\" type=\"image/png\" sizes=\"48x48\" href=\"/favicon-48x48.png\">\n");
+    out.push_str("<link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/favicon-192x192.png\">\n");
     out.push_str("<link rel=\"icon\" href=\"/icon.svg\" type=\"image/svg+xml\">\n");
-    out.push_str("<link rel=\"icon\" href=\"/logo.jpeg\" sizes=\"192x192\" type=\"image/jpeg\">\n");
-    out.push_str("<link rel=\"apple-touch-icon\" href=\"/logo.jpeg\" sizes=\"180x180\">\n");
-    out.push_str("<link rel=\"shortcut icon\" href=\"/icon.svg\">\n");
+    out.push_str("<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\">\n");
+    out.push_str("<link rel=\"shortcut icon\" href=\"/favicon.ico\">\n");
     out.push_str("<link rel=\"manifest\" href=\"/manifest.webmanifest\">\n");
     out.push_str("<meta property=\"og:type\" content=\"website\">\n");
     out.push_str(&format!("<meta property=\"og:site_name\" content=\"{}\">\n", SITE.name));
