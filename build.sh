@@ -27,7 +27,21 @@ if ! command -v wasm-pack &> /dev/null; then
     export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-echo "=== 1. Building SSG Binary ==="
+echo "=== 1. Minifying CSS Assets ==="
+if command -v python3 &> /dev/null; then
+    python3 -c "
+import re
+with open('static/styles.css') as f:
+    raw = f.read()
+minified = re.sub(r'/\*[\s\S]*?\*/', '', raw)
+minified = re.sub(r'\s*([\{\};:,>~+])\s*', r'\1', minified)
+minified = re.sub(r'\s+', ' ', minified).replace(';}', '}').strip()
+with open('static/styles.min.css', 'w') as f:
+    f.write(minified)
+"
+fi
+
+echo "=== 2. Building SSG Binary ==="
 cargo build --release --bin portfolio-ssg
 
 echo "=== 2. Running SSG to generate static HTML and copy assets to dist/ ==="

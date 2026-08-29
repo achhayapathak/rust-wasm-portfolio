@@ -121,7 +121,7 @@ pub fn render_footer() -> String {
     let mut contact_links = String::new();
     // Email
     contact_links.push_str(&format!(
-        r#"<li><a class="num" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={}" target="_blank" rel="noopener noreferrer">{}<span>{}</span></a></li>"#,
+        r#"<li><a class="num" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={}" target="_blank" rel="noopener noreferrer">{}<span><!--email_off-->{}<!--/email_off--></span></a></li>"#,
         SITE.email,
         render_glyph("mail", 16),
         SITE.email

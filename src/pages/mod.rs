@@ -68,7 +68,6 @@ pub fn render_html_wrapper(
     out.push_str("<link rel=\"icon\" href=\"/favicon.ico\" sizes=\"any\">\n");
     out.push_str("<link rel=\"icon\" type=\"image/png\" sizes=\"48x48\" href=\"/favicon-48x48.png\">\n");
     out.push_str("<link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/favicon-192x192.png\">\n");
-    out.push_str("<link rel=\"icon\" href=\"/icon.svg\" type=\"image/svg+xml\">\n");
     out.push_str("<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\">\n");
     out.push_str("<link rel=\"shortcut icon\" href=\"/favicon.ico\">\n");
     out.push_str("<link rel=\"manifest\" href=\"/manifest.webmanifest\">\n");
@@ -92,10 +91,20 @@ pub fn render_html_wrapper(
     out.push_str(&format!("<meta name=\"twitter:image\" content=\"{}/logo.jpeg\">\n", base_url));
     out.push_str(&format!("<meta name=\"twitter:image:alt\" content=\"{} Logo\">\n", SITE.name));
     out.push_str("<meta name=\"robots\" content=\"index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1\">\n");
+    // Preload critical JS & WASM to break waterfall chains
+    out.push_str("<link rel=\"modulepreload\" href=\"/app.js\">\n");
+    out.push_str("<link rel=\"modulepreload\" href=\"/pkg/portfolio_wasm.js\">\n");
+    out.push_str("<link rel=\"preload\" href=\"/pkg/portfolio_wasm_bg.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin>\n");
+    // Non-blocking Google Fonts with subsetted weights
     out.push_str("<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n");
     out.push_str("<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n");
-    out.push_str("<link href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap\" rel=\"stylesheet\">\n");
-    out.push_str("<link rel=\"stylesheet\" href=\"/styles.css\">\n");
+    out.push_str("<link rel=\"preload\" as=\"style\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap\">\n");
+    out.push_str("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap\" media=\"print\" onload=\"this.media='all'\">\n");
+    out.push_str("<noscript><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap\"></noscript>\n");
+    // Inlined Critical CSS — 0 render-blocking CSS requests
+    out.push_str("<style>\n");
+    out.push_str(include_str!("../../static/styles.min.css"));
+    out.push_str("\n</style>\n");
     out.push_str(&format!("<script type=\"application/ld+json\">{}</script>\n", website_schema));
     out.push_str(&format!("<script type=\"application/ld+json\">{}</script>\n", person_schema));
     out.push_str(&format!("<script type=\"application/ld+json\">{}</script>\n", profile_page_schema));
@@ -103,10 +112,40 @@ pub fn render_html_wrapper(
         out.push_str(extra_ld_json);
         out.push('\n');
     }
-    out.push_str("<script>\n(function(){try{var stored=localStorage.getItem(\"theme\");if(stored===\"dark\"){document.documentElement.classList.add(\"dark\")}else{document.documentElement.classList.remove(\"dark\")}}catch(e){}})();\n</script>\n");
+    // Instant synchronous UI script (0ms latency dark mode & menu)
+    out.push_str(r#"<script>
+(function(){
+  try{
+    var s=localStorage.getItem("theme");
+    if(s==="dark"){document.documentElement.classList.add("dark")}
+    else{document.documentElement.classList.remove("dark")}
+  }catch(e){}
+  document.addEventListener("DOMContentLoaded",function(){
+    var dt=document.getElementById("dark-mode-toggle");
+    if(dt){
+      dt.onclick=function(){
+        var d=document.documentElement.classList.toggle("dark");
+        try{localStorage.setItem("theme",d?"dark":"light")}catch(e){}
+        var ic=document.getElementById("dark-mode-icon"),lb=document.getElementById("dark-mode-label");
+        if(ic)ic.innerHTML=d?'<span class="glyph-icon" style="width:17px;display:inline-block;flex-shrink:0"><svg viewBox="0 0 24 24" aria-hidden="true" style="display:block;height:auto;width:100%;fill:none;stroke:currentColor;stroke-width:2.1"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3m-14.1-7.1 2.1 2.1m10 10 2.1 2.1m0-14.2-2.1 2.1m-10 10-2.1 2.1"/></svg></span>':'<span class="glyph-icon" style="width:17px;display:inline-block;flex-shrink:0"><svg viewBox="0 0 24 24" aria-hidden="true" style="display:block;height:auto;width:100%;fill:none;stroke:currentColor;stroke-width:2.1"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>';
+        if(lb)lb.textContent=d?"dark":"light";
+      };
+    }
+    var mt=document.getElementById("mobile-trigger"),ms=document.getElementById("mobile-sheet"),mc=document.getElementById("mobile-close");
+    if(mt&&ms){mt.onclick=function(){ms.style.display="block";document.body.classList.add("nav-open");mt.setAttribute("aria-expanded","true")}}
+    if(mc&&ms){mc.onclick=function(){ms.style.display="none";document.body.classList.remove("nav-open");if(mt)mt.setAttribute("aria-expanded","false")}}
+    document.querySelectorAll(".mobile-row").forEach(function(r){r.onclick=function(){if(ms)ms.style.display="none";document.body.classList.remove("nav-open");if(mt)mt.setAttribute("aria-expanded","false")}});
+    if("IntersectionObserver" in window){
+      var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateY(0)"}})},{rootMargin:"-50px"});
+      document.querySelectorAll(".section-reveal").forEach(function(el){el.style.opacity="0";el.style.transform="translateY(24px)";el.style.transition="opacity .5s ease-out, transform .5s ease-out";obs.observe(el)});
+    }
+  });
+})();
+</script>
+"#);
     out.push_str("</head>\n<body>\n<a href=\"#main\" class=\"skip-link\">skip to content</a>\n<div style=\"display:block;max-width:1240px;margin:0 auto\">\n");
     out.push_str(body_html);
-    out.push_str("\n</div>\n<script type=\"module\" src=\"/app.js\"></script>\n</body>\n</html>");
+    out.push_str("\n</div>\n<script type=\"module\" src=\"/app.js\" defer></script>\n</body>\n</html>");
 
     out
 }

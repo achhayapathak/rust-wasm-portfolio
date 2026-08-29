@@ -37,6 +37,12 @@ features = [
     "CssStyleDeclaration",
 ]
 
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-Oz", "--enable-bulk-memory"]
+
 [profile.release]
-opt-level = "s"
+opt-level = "z"
 lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

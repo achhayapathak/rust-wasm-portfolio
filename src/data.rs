@@ -178,7 +178,7 @@ pub static CONTACT_CARDS: &[ContactCard] = &[
         icon: "mail",
         stock: StockColor::Lime,
         url: "https://mail.google.com/mail/?view=cm&fs=1&to=info@achhaya.com",
-        label: "info@achhaya.com",
+        label: "<!--email_off-->info@achhaya.com<!--/email_off-->",
         description: "best for anything that needs a written trail",
     },
     ContactCard {
