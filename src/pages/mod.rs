@@ -94,6 +94,7 @@ pub fn render_html_wrapper(
     // Preload critical local typography for 0-latency paint
     out.push_str("<link rel=\"preload\" href=\"/fonts/space-grotesk.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n");
     out.push_str("<link rel=\"preload\" href=\"/fonts/archivo-black.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n");
+    out.push_str("<link rel=\"preload\" href=\"/fonts/jetbrains-mono.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n");
     // Preload critical JS & WASM to break waterfall chains
     out.push_str("<link rel=\"modulepreload\" href=\"/app.js\">\n");
     out.push_str("<link rel=\"modulepreload\" href=\"/pkg/portfolio_wasm.js\">\n");
