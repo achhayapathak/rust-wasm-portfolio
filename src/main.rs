@@ -64,8 +64,8 @@ fn generate_manifest(dist: &Path) {
     manifest.push_str("  \"background_color\": \"#fdf6e3\",\n");
     manifest.push_str("  \"theme_color\": \"#fdf6e3\",\n");
     manifest.push_str("  \"icons\": [\n");
-    manifest.push_str("    {\n      \"src\": \"/icon.svg\",\n      \"sizes\": \"any\",\n      \"type\": \"image/svg+xml\"\n    },\n");
-    manifest.push_str("    {\n      \"src\": \"/logo.jpeg\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/jpeg\"\n    },\n");
+    manifest.push_str("    {\n      \"src\": \"/favicon-48x48.png\",\n      \"sizes\": \"48x48\",\n      \"type\": \"image/png\"\n    },\n");
+    manifest.push_str("    {\n      \"src\": \"/favicon-192x192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\"\n    },\n");
     manifest.push_str("    {\n      \"src\": \"/logo.jpeg\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/jpeg\"\n    }\n");
     manifest.push_str("  ]\n}\n");
     fs::write(dist.join("manifest.webmanifest"), manifest).expect("Failed to write manifest.webmanifest");

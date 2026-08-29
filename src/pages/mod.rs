@@ -91,17 +91,14 @@ pub fn render_html_wrapper(
     out.push_str(&format!("<meta name=\"twitter:image\" content=\"{}/logo.jpeg\">\n", base_url));
     out.push_str(&format!("<meta name=\"twitter:image:alt\" content=\"{} Logo\">\n", SITE.name));
     out.push_str("<meta name=\"robots\" content=\"index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1\">\n");
+    // Preload critical local typography for 0-latency paint
+    out.push_str("<link rel=\"preload\" href=\"/fonts/space-grotesk.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n");
+    out.push_str("<link rel=\"preload\" href=\"/fonts/archivo-black.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n");
     // Preload critical JS & WASM to break waterfall chains
     out.push_str("<link rel=\"modulepreload\" href=\"/app.js\">\n");
     out.push_str("<link rel=\"modulepreload\" href=\"/pkg/portfolio_wasm.js\">\n");
     out.push_str("<link rel=\"preload\" href=\"/pkg/portfolio_wasm_bg.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin>\n");
-    // Non-blocking Google Fonts with subsetted weights
-    out.push_str("<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n");
-    out.push_str("<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n");
-    out.push_str("<link rel=\"preload\" as=\"style\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap\">\n");
-    out.push_str("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap\" media=\"print\" onload=\"this.media='all'\">\n");
-    out.push_str("<noscript><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap\"></noscript>\n");
-    // Inlined Critical CSS — 0 render-blocking CSS requests
+    // Inlined Critical CSS — 0 render-blocking CSS requests, 0 external network requests
     out.push_str("<style>\n");
     out.push_str(include_str!("../../static/styles.min.css"));
     out.push_str("\n</style>\n");
