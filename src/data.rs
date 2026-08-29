@@ -151,7 +151,7 @@ pub static SITE: SiteConfig = SiteConfig {
     title: "Software Engineer",
     location: "Gurugram, India",
     email: "info@achhaya.com",
-    description: "IIT Guwahati MS alum & Backend Engineer with 3 years of building systems that actually scale. I shipped a 0\u{2192}1 marketplace serving 100K+ monthly requests at 99.99% uptime. Big fan of distributed systems, cloud infra, and writing blazingly fast code \u{1F680}",
+    description: "IIT Guwahati MS alumnus and Software / Backend Engineer with 3+ years of experience architecting distributed systems, cloud infrastructure (AWS/GCP), high-performance web applications (Rust/WASM, Next.js), and autonomous AI agent pipelines.",
     site_url: "https://achhaya.com",
 };
 
