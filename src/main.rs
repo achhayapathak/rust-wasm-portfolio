@@ -64,7 +64,9 @@ fn generate_manifest(dist: &Path) {
     manifest.push_str("  \"background_color\": \"#fdf6e3\",\n");
     manifest.push_str("  \"theme_color\": \"#fdf6e3\",\n");
     manifest.push_str("  \"icons\": [\n");
+    manifest.push_str("    {\n      \"src\": \"/favicon.svg\",\n      \"sizes\": \"any\",\n      \"type\": \"image/svg+xml\"\n    },\n");
     manifest.push_str("    {\n      \"src\": \"/favicon-48x48.png\",\n      \"sizes\": \"48x48\",\n      \"type\": \"image/png\"\n    },\n");
+    manifest.push_str("    {\n      \"src\": \"/favicon-96x96.png\",\n      \"sizes\": \"96x96\",\n      \"type\": \"image/png\"\n    },\n");
     manifest.push_str("    {\n      \"src\": \"/favicon-192x192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\"\n    },\n");
     manifest.push_str("    {\n      \"src\": \"/logo.jpeg\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/jpeg\"\n    }\n");
     manifest.push_str("  ]\n}\n");

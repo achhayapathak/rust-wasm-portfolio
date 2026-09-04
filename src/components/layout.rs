@@ -94,9 +94,11 @@ pub fn render_dark_mode_toggle() -> String {
 /// Masthead header — the main branded panel at the top.
 pub fn render_masthead(current_path: &str) -> String {
     format!(
-        r#"<header class="masthead app-panel stock-cream">{}{}<div class="brand"><a href="/" class="brand-link"><span class="brand-name">{}</span></a><p class="lbl lbl-ink brand-sub">{} &nbsp;·&nbsp; {}</p></div><div class="controls">{}{}</div>{}</header>"#,
+        r#"<header class="masthead app-panel stock-cream">{}{}<div class="brand"><a href="/" class="brand-link" aria-label="{} homepage"><div class="brand-avatar-wrap"><img src="/logo.jpeg" alt="{}" class="brand-avatar" width="56" height="56" loading="eager"></div><div class="brand-text"><span class="brand-name">{}</span><p class="lbl lbl-ink brand-sub">{} &nbsp;·&nbsp; {}</p></div></a></div><div class="controls">{}{}</div>{}</header>"#,
         render_grid_background(),
         render_marks_overlay(DEFAULT_MARKS),
+        SITE.name,
+        SITE.name,
         render_carbon_title(SITE.name),
         SITE.title,
         SITE.location,

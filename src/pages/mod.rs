@@ -21,8 +21,8 @@ pub fn render_html_wrapper(
     let base_url = SITE.site_url.trim_end_matches('/');
 
     let website_schema = format!(
-        r#"{{"@context":"https://schema.org","@type":"WebSite","name":"{}","url":"{}","inLanguage":"en","description":"{}","image":"{}/logo.jpeg","publisher":{{"@type":"Person","name":"{}","url":"{}","image":"{}/logo.jpeg"}}}}"#,
-        SITE.name, base_url, SITE.description, base_url, SITE.name, base_url, base_url
+        r#"{{"@context":"https://schema.org","@type":"WebSite","name":"{}","url":"{}","inLanguage":"en","description":"{}","image":"{}/logo.jpeg","logo":"{}/logo.jpeg","publisher":{{"@type":"Person","name":"{}","url":"{}","image":"{}/logo.jpeg","logo":"{}/logo.jpeg"}}}}"#,
+        SITE.name, base_url, SITE.description, base_url, base_url, SITE.name, base_url, base_url, base_url
     );
 
     let same_as = r#"["https://linkedin.com/in/achhayapathak","https://github.com/achhayapathak","https://x.com/frozen_parantha","https://leetcode.com/u/achhayapathak/"]"#;
@@ -32,6 +32,11 @@ pub fn render_html_wrapper(
     let person_schema = format!(
         r#"{{"@context":"https://schema.org","@type":"Person","@id":"{}/#person","name":"{}","alternateName":["frozen_parantha","Achhaya"],"url":"{}","image":"{}/logo.jpeg","logo":"{}/logo.jpeg","jobTitle":"{}","worksFor":{{"@type":"Organization","name":"JoinUp","url":"https://joinup.dev","logo":"{}/logo.jpeg"}},"alumniOf":[{{"@type":"EducationalOrganization","name":"Indian Institute of Technology, Guwahati","url":"https://www.iitg.ac.in/"}},{{"@type":"EducationalOrganization","name":"Hansraj College, University of Delhi","url":"https://www.hansrajcollege.ac.in/"}}],"email":"mailto:{}","address":{{"@type":"PostalAddress","addressLocality":"Gurugram","addressCountry":"IN"}},"knowsAbout":{},"sameAs":{}}}"#,
         base_url, SITE.name, base_url, base_url, base_url, SITE.title, base_url, SITE.email, knows_about_json, same_as
+    );
+
+    let org_schema = format!(
+        r#"{{"@context":"https://schema.org","@type":"Organization","name":"{}","url":"{}","logo":"{}/logo.jpeg","image":"{}/logo.jpeg","sameAs":{}}}"#,
+        SITE.name, base_url, base_url, base_url, same_as
     );
 
     let profile_page_schema = format!(
@@ -65,8 +70,10 @@ pub fn render_html_wrapper(
     out.push_str("<meta name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"#08080b\">\n");
     out.push_str(&format!("<link rel=\"canonical\" href=\"{}\">\n", canonical_url));
     out.push_str(&format!("<link rel=\"image_src\" href=\"{}/logo.jpeg\">\n", base_url));
-    out.push_str("<link rel=\"icon\" href=\"/favicon.ico\" sizes=\"any\">\n");
+    out.push_str("<link rel=\"icon\" href=\"/favicon.ico\" sizes=\"48x48\">\n");
+    out.push_str("<link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\" sizes=\"any\">\n");
     out.push_str("<link rel=\"icon\" type=\"image/png\" sizes=\"48x48\" href=\"/favicon-48x48.png\">\n");
+    out.push_str("<link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"/favicon-96x96.png\">\n");
     out.push_str("<link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/favicon-192x192.png\">\n");
     out.push_str("<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\">\n");
     out.push_str("<link rel=\"shortcut icon\" href=\"/favicon.ico\">\n");
@@ -105,6 +112,7 @@ pub fn render_html_wrapper(
     out.push_str("\n</style>\n");
     out.push_str(&format!("<script type=\"application/ld+json\">{}</script>\n", website_schema));
     out.push_str(&format!("<script type=\"application/ld+json\">{}</script>\n", person_schema));
+    out.push_str(&format!("<script type=\"application/ld+json\">{}</script>\n", org_schema));
     out.push_str(&format!("<script type=\"application/ld+json\">{}</script>\n", profile_page_schema));
     if !extra_ld_json.is_empty() {
         out.push_str(extra_ld_json);
