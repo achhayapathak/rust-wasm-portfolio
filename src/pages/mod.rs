@@ -21,8 +21,8 @@ pub fn render_html_wrapper(
     let base_url = SITE.site_url.trim_end_matches('/');
 
     let website_schema = format!(
-        r#"{{"@context":"https://schema.org","@type":"WebSite","name":"{}","url":"{}","inLanguage":"en","description":"{}","image":"{}/logo.jpeg","logo":"{}/logo.jpeg","publisher":{{"@type":"Person","name":"{}","url":"{}","image":"{}/logo.jpeg","logo":"{}/logo.jpeg"}}}}"#,
-        SITE.name, base_url, SITE.description, base_url, base_url, SITE.name, base_url, base_url, base_url
+        r#"{{"@context":"https://schema.org","@type":"WebSite","@id":"{}/#website","name":"{}","alternateName":["Achhaya","Achhaya Pathak Portfolio","frozen_parantha","achhaya.com"],"url":"{}/","inLanguage":"en","description":"{}","image":"{}/logo.jpeg","logo":"{}/logo.jpeg","publisher":{{"@type":"Person","name":"{}","url":"{}/","image":"{}/logo.jpeg","logo":"{}/logo.jpeg"}}}}"#,
+        base_url, SITE.name, base_url, SITE.description, base_url, base_url, SITE.name, base_url, base_url, base_url
     );
 
     let same_as = r#"["https://linkedin.com/in/achhayapathak","https://github.com/achhayapathak","https://x.com/frozen_parantha","https://leetcode.com/u/achhayapathak/"]"#;
@@ -35,13 +35,13 @@ pub fn render_html_wrapper(
     );
 
     let org_schema = format!(
-        r#"{{"@context":"https://schema.org","@type":"Organization","name":"{}","url":"{}","logo":"{}/logo.jpeg","image":"{}/logo.jpeg","sameAs":{}}}"#,
+        r#"{{"@context":"https://schema.org","@type":"Organization","name":"{}","url":"{}/","logo":"{}/logo.jpeg","image":"{}/logo.jpeg","sameAs":{}}}"#,
         SITE.name, base_url, base_url, base_url, same_as
     );
 
     let profile_page_schema = format!(
-        r#"{{"@context":"https://schema.org","@type":"ProfilePage","name":"{}'s Engineering Portfolio & Ledger","url":"{}","primaryImageOfPage":{{"@type":"ImageObject","url":"{}/logo.jpeg","caption":"{} Logo"}},"mainEntity":{{"@id":"{}/#person"}},"isPartOf":{{"@type":"WebSite","name":"{}","url":"{}"}}}}"#,
-        SITE.name, base_url, base_url, SITE.name, base_url, SITE.name, base_url
+        r#"{{"@context":"https://schema.org","@type":"ProfilePage","name":"{}'s Engineering Portfolio & Ledger","url":"{}","primaryImageOfPage":{{"@type":"ImageObject","url":"{}/logo.jpeg","caption":"{} Logo"}},"mainEntity":{{"@id":"{}/#person"}},"isPartOf":{{"@id":"{}/#website"}}}}"#,
+        SITE.name, base_url, base_url, SITE.name, base_url, base_url
     );
 
     let canonical_url = if canonical_path == "/" {
@@ -57,7 +57,8 @@ pub fn render_html_wrapper(
     out.push_str(&format!("<meta itemprop=\"name\" content=\"{}\">\n", page_title));
     out.push_str(&format!("<meta itemprop=\"description\" content=\"{}\">\n", meta_description));
     out.push_str(&format!("<meta itemprop=\"image\" content=\"{}/logo.jpeg\">\n", base_url));
-    out.push_str(&format!("<meta name=\"application-name\" content=\"{} Portfolio\">\n", SITE.name));
+    out.push_str(&format!("<meta name=\"application-name\" content=\"{}\">\n", SITE.name));
+    out.push_str(&format!("<meta name=\"apple-mobile-web-app-title\" content=\"{}\">\n", SITE.name));
     out.push_str(&format!("<meta name=\"author\" content=\"{}\">\n", SITE.name));
     out.push_str("<meta name=\"generator\" content=\"Rust SSG + WebAssembly\">\n");
     out.push_str("<meta name=\"keywords\" content=\"Achhaya Pathak,Software Engineer,Backend Engineer,Distributed Systems,Cloud Infrastructure,IIT Guwahati,JoinUp,Go,Python,TypeScript,Rust,Kubernetes,Docker,Kafka,RabbitMQ,Redis,PostgreSQL,AWS,GCP,Next.js,Microservices,Event Driven Architecture,Portfolio\">\n");
