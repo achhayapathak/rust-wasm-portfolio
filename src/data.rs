@@ -229,7 +229,7 @@ pub static NAV_ITEMS: &[NavItem] = &[
     NavItem { label: "Overview", href: "/", stock: StockColor::Cream },
     NavItem { label: "Work", href: "/work", stock: StockColor::Lime },
     NavItem { label: "Projects", href: "/projects", stock: StockColor::Cobalt },
-    NavItem { label: "Education", href: "/education", stock: StockColor::Yellow },
+    NavItem { label: "Education", href: "/education", stock: StockColor::Violet },
     NavItem { label: "Volunteering", href: "/volunteering", stock: StockColor::Magenta },
     NavItem { label: "Connect", href: "/contact", stock: StockColor::Orange },
 ];
@@ -257,7 +257,7 @@ pub static WORK: &[WorkEntry] = &[
         role: "Senior Software Engineer",
         period: "May 2026 - Present",
         status: EntryStatus::InProgress,
-        stock: StockColor::Yellow,
+        stock: StockColor::Violet,
         tags: &["Golang", "Backend", "System Design", "Websockets", "Kubernetes", "Payments", "AWS"],
         summary: "Working on designing and developing INDMoney's payments, bill payments and rewards systems, making it more scalable, reliable, and secure. Architected and implemented a highly scalable multi-tenant, service agnostic websocket server for real-time data delivery to 1M+ users with sub-50ms latency.",
         bullets: &[
@@ -310,7 +310,7 @@ pub static WORK: &[WorkEntry] = &[
         role: "Summer Research Intern",
         period: "April 2021 - May 2021",
         status: EntryStatus::Completed,
-        stock: StockColor::Violet,
+        stock: StockColor::Yellow,
         tags: &["MS Excel", "Python", "Tableau"],
         summary: "Conducted a seismic data analysis for the Hindukush region of 59255 earthquakes over the years 2000-2020. Reckoned the b-value for the target region as 1.136 \u{00B1} 0.007 using the Gutenberg\u{2013}Richter relation. Determined which locations are suitable for construction-related operations after carrying out a study based on a non-uniform division of the region.",
         bullets: &[],
@@ -409,7 +409,7 @@ pub static EDUCATION: &[EduEntry] = &[
         degree: "Master\u{2019}s degree, Mathematics and Computing",
         period: "July 2021 - June 2023",
         status: EntryStatus::Completed,
-        stock: StockColor::Violet,
+        stock: StockColor::Yellow,
         summary: Some("Completed my masters in mathematics and computing with specialization in courses such as Graph Theory, Optimization Theory, Probabilistic Method, Data Structure & Algorithm, Advanced Algorithms, etc. Also worked on research on Blockchain and wrote a research paper on it."),
     },
     EduEntry {
@@ -503,7 +503,7 @@ pub static SECTION_EDUCATION: SectionMeta = SectionMeta {
     subtitle: "academic record",
     title: "Education",
     info: "Formal academic background, degrees, and foundational studies in mathematics and computer science.",
-    stock: StockColor::Yellow,
+    stock: StockColor::Violet,
 };
 
 pub static SECTION_VOLUNTEERING: SectionMeta = SectionMeta {
