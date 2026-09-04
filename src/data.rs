@@ -253,11 +253,25 @@ pub static WORK: &[WorkEntry] = &[
         ],
     },
     WorkEntry {
+        company: "INDmoney",
+        role: "Senior Software Engineer",
+        period: "May 2026 - Present",
+        status: EntryStatus::InProgress,
+        stock: StockColor::Yellow,
+        tags: &["Golang", "Backend", "System Design", "Websockets", "Kubernetes", "Payments", "AWS"],
+        summary: "Working on designing and developing INDMoney's payments, bill payments and rewards systems, making it more scalable, reliable, and secure. Architected and implemented a highly scalable multi-tenant, service agnostic websocket server for real-time data delivery to 1M+ users with sub-50ms latency.",
+        bullets: &[
+            "Architected and deployed a scalable, multi-tenant, multi-region, service-agnostic real-time data distribution platform. Engineered the complete backend infrastructure from scratch, including API design, database schemas, deployment pipelines, and observability layers, establishing a highly available system for 1M+ users.",
+            "Implemented comprehensive observability into the data platform, integrating metrics, tracing, and logging across the entire stack. Set up real-time monitoring and alerting dashboards using Grafana, Prometheus, and other observability tools to ensure high availability and proactive issue resolution.",
+            "Deployed production workloads on AWS infrastructure across multiple regions, utilizing services like Kubernetes, Postgres, and Redis.",
+        ],
+    },
+    WorkEntry {
         company: "Marlin",
         role: "Software Engineer",
         period: "Apr 2025 - May 2026",
         status: EntryStatus::Completed,
-        stock: StockColor::Yellow,
+        stock: StockColor::Orange,
         tags: &["Rust", "Agentic AI", "LLM", "RabbitMQ", "Kubernetes", "Microservices"],
         summary: "Built an autonomous LLM-driven trading AI agent that executes fully automated token trades on Hyperliquid, based on the condition set by user such as market trends, community sentiment, recent news, tweets, etc. It can also be used to copy trade of sharks or whales.",
         bullets: &[
