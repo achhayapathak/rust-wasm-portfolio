@@ -130,7 +130,7 @@ pub fn render_html_wrapper(
   }
   try{
     var s=localStorage.getItem("theme");
-    var isDark = s==="dark" || (!s && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var isDark = s==="dark";
     if(isDark){document.documentElement.classList.add("dark")}
     else{document.documentElement.classList.remove("dark")}
   }catch(e){}
