@@ -122,20 +122,26 @@ pub fn render_html_wrapper(
     // Instant synchronous UI script (0ms latency dark mode & menu)
     out.push_str(r#"<script>
 (function(){
+  function syncUI(d){
+    var ic=document.getElementById("dark-mode-icon"),lb=document.getElementById("dark-mode-label"),dt=document.getElementById("dark-mode-toggle");
+    if(ic)ic.innerHTML=d?'<span class="glyph-icon" style="width:17px;display:inline-block;flex-shrink:0"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="display:block;height:auto;width:100%;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:square;stroke-linejoin:miter"><circle cx="12" cy="12" r="4"/><path d="M12 2 V5 M12 19 V22 M2 12 H5 M19 12 H22 M4.9 4.9 L7 7 M17 17 L19.1 19.1 M19.1 4.9 L17 7 M7 17 L4.9 19.1"/></svg></span>':'<span class="glyph-icon" style="width:17px;display:inline-block;flex-shrink:0"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="display:block;height:auto;width:100%;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:square;stroke-linejoin:miter"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>';
+    if(lb)lb.textContent=d?"dark":"light";
+    if(dt)dt.setAttribute("aria-label",d?"Switch to light mode":"Switch to dark mode");
+  }
   try{
     var s=localStorage.getItem("theme");
-    if(s==="dark"){document.documentElement.classList.add("dark")}
+    var isDark = s==="dark" || (!s && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    if(isDark){document.documentElement.classList.add("dark")}
     else{document.documentElement.classList.remove("dark")}
   }catch(e){}
   document.addEventListener("DOMContentLoaded",function(){
+    syncUI(document.documentElement.classList.contains("dark"));
     var dt=document.getElementById("dark-mode-toggle");
     if(dt){
       dt.onclick=function(){
         var d=document.documentElement.classList.toggle("dark");
         try{localStorage.setItem("theme",d?"dark":"light")}catch(e){}
-        var ic=document.getElementById("dark-mode-icon"),lb=document.getElementById("dark-mode-label");
-        if(ic)ic.innerHTML=d?'<span class="glyph-icon" style="width:17px;display:inline-block;flex-shrink:0"><svg viewBox="0 0 24 24" aria-hidden="true" style="display:block;height:auto;width:100%;fill:none;stroke:currentColor;stroke-width:2.1"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3m-14.1-7.1 2.1 2.1m10 10 2.1 2.1m0-14.2-2.1 2.1m-10 10-2.1 2.1"/></svg></span>':'<span class="glyph-icon" style="width:17px;display:inline-block;flex-shrink:0"><svg viewBox="0 0 24 24" aria-hidden="true" style="display:block;height:auto;width:100%;fill:none;stroke:currentColor;stroke-width:2.1"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>';
-        if(lb)lb.textContent=d?"dark":"light";
+        syncUI(d);
       };
     }
     var mt=document.getElementById("mobile-trigger"),ms=document.getElementById("mobile-sheet"),mc=document.getElementById("mobile-close");

@@ -33,18 +33,25 @@ fn setup_dark_mode(document: &Document) {
         None => return,
     };
 
+    if let Ok(html_el) = toggle.clone().dyn_into::<HtmlElement>() {
+        html_el.set_onclick(None);
+    }
+
     let doc = document.clone();
     let closure = Closure::wrap(Box::new(move || {
-        let html = doc.document_element().unwrap();
+        let html = match doc.document_element() {
+            Some(h) => h,
+            None => return,
+        };
         let is_dark = html.class_list().contains("dark");
 
         if is_dark {
-            html.class_list().remove_1("dark").unwrap();
+            let _ = html.class_list().remove_1("dark");
             if let Ok(Some(storage)) = window().unwrap().local_storage() {
                 let _ = storage.set_item("theme", "light");
             }
         } else {
-            html.class_list().add_1("dark").unwrap();
+            let _ = html.class_list().add_1("dark");
             if let Ok(Some(storage)) = window().unwrap().local_storage() {
                 let _ = storage.set_item("theme", "dark");
             }
@@ -53,9 +60,7 @@ fn setup_dark_mode(document: &Document) {
         update_dark_mode_ui(&doc);
     }) as Box<dyn FnMut()>);
 
-    toggle
-        .add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())
-        .unwrap();
+    let _ = toggle.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref());
     closure.forget();
 
     // Set initial UI state
